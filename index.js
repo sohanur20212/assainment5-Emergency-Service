@@ -19,7 +19,7 @@ getElement("cards").addEventListener("click", function (e) {
     const currentDownCount = Number(coinDown) - 20;
 
     if (currentDownCount < 0) {
-      alert("পর্যাপ্ত coin নেই!");
+      alert("❌ আপনার পর্যন্ত কয়েন নেই , কমপক্ষে কল করতে ২০ কয়েন লাগবে।");
       return;
     }
     getElement("coin-down").innerText = currentDownCount;
@@ -30,7 +30,17 @@ getElement("cards").addEventListener("click", function (e) {
     const copyCount = getElement("copyCountBtn").innerText;
     const currentCopyCount = Number(copyCount) + 1;
     getElement("copyCountBtn").innerText = currentCopyCount;
-    console.log(currentCopyCount);
+
+    // copy hotnumber 
+     const copyButton = e.target;
+  const hotNum = copyButton.parentNode.parentNode.childNodes[7].innerText;
+
+  
+
+  navigator.clipboard.writeText(hotNum).then(() => {
+    alert(`Copy হয়েছে: ${hotNum}`);
+  })
+    
   }
 
   // add div in history
@@ -39,12 +49,12 @@ getElement("cards").addEventListener("click", function (e) {
     const title = callButton.parentNode.parentNode.childNodes[3].innerText;
 
     const hotNum = callButton.parentNode.parentNode.childNodes[7].innerText;
-    alert(title + " " + hotNum);
+    alert("📞" + title + " " + hotNum);
     const historyContainer = getElement("clearHistoryContainer");
 
     const newCard = document.createElement("div");
     const now = new Date();
-    const time = now.toDateString();
+    const time = now.toLocaleTimeString();
     newCard.innerHTML = `
     <div class="  bg-[#fafafa] p-3 gap-2 mt-5 rounded-xl ">
                 <div class="flex justify-between items-center">
