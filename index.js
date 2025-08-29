@@ -1,83 +1,67 @@
-function getElement(id){
-   const element = document.getElementById(id);
-    return element
+function getElement(id) {
+  const element = document.getElementById(id);
+  return element;
 }
 
-// delegation 
+// delegation
 
-
-
-
-getElement('cards').addEventListener('click',function(e){
-   if(e.target.className.includes('fa-heart')){
+getElement("cards").addEventListener("click", function (e) {
+  if (e.target.className.includes("fa-heart")) {
     // hert icon  count
-    const heartCount = getElement('heart-count').innerText
-    const currentCount = Number(heartCount) + 1
-    getElement('heart-count').innerText = currentCount
-    
-   }
+    const heartCount = getElement("heart-count").innerText;
+    const currentCount = Number(heartCount) + 1;
+    getElement("heart-count").innerText = currentCount;
+  }
 
-    // down the coin count 
-   if(e.target.className.includes('call_btn')){
-    const coinDown = getElement('coin-down').innerText
+  // down the coin count
+  if (e.target.className.includes("call_btn")) {
+    const coinDown = getElement("coin-down").innerText;
     const currentDownCount = Number(coinDown) - 20;
-    getElement('coin-down').innerText = currentDownCount;
-   }
 
+    if (currentDownCount < 0) {
+      alert("পর্যাপ্ত coin নেই!");
+      return;
+    }
+    getElement("coin-down").innerText = currentDownCount;
+  }
 
-
-//    copy count 
-   if(e.target.className.includes('copy-btn')){
-    const copyCount = getElement('copyCountBtn').innerText
+  //    copy count
+  if (e.target.className.includes("copy-btn")) {
+    const copyCount = getElement("copyCountBtn").innerText;
     const currentCopyCount = Number(copyCount) + 1;
-     getElement('copyCountBtn').innerText = currentCopyCount;
+    getElement("copyCountBtn").innerText = currentCopyCount;
     console.log(currentCopyCount);
-    
-   }
-   
+  }
 
+  // add div in history
+  if (e.target.className.includes("call_btn")) {
+    const callButton = e.target;
+    const title = callButton.parentNode.parentNode.childNodes[3].innerText;
 
-    // add div in history 
-    if(e.target.className.includes('call_btn')){
-        alert(title)
-        const historyContainer = getElement('historyContainer')
+    const hotNum = callButton.parentNode.parentNode.childNodes[7].innerText;
+    alert(title + " " + hotNum);
+    const historyContainer = getElement("clearHistoryContainer");
 
-const newCard = document.createElement('div')
-
-newCard.innerHTML = `
+    const newCard = document.createElement("div");
+    const now = new Date();
+    const time = now.toDateString();
+    newCard.innerHTML = `
     <div class="  bg-[#fafafa] p-3 gap-2 mt-5 rounded-xl ">
                 <div class="flex justify-between items-center">
                     <div class="">
                 <h1 class="font-bold">${title}</h1>
-                <span class="text-[#777777]">999</span>
+                <span class="text-[#777777]">${hotNum}</span>
                 </div>
-                <div class="font-semibold">11:36:58 AM</div>
+                <div class="font-semibold">${time}</div>
             </div>
                 
            </div>
 
-`
-historyContainer.append(newCard)
+`;
+    historyContainer.append(newCard);
+  }
+});
 
-        
-    }
-})
-
-
-
-
-// traverse technique 
-
-const callBtn = document.getElementsByClassName('call_btn')
-for(const callButton of callBtn){
-    callButton.addEventListener('click', function(){
-        // const title = callButton.closest('.card')
-        const title = callButton.parentNode.parentNode.childNodes[3].innerText
-
-        const hotNum = callButton.parentNode.parentNode.childNodes[7].innerText
-       console.log(title,hotNum);
-    })
-    
-    
-}
-
+getElement("clearHistoryBtn").addEventListener("click", function () {
+  getElement("clearHistoryContainer").innerHTML = "";
+});
